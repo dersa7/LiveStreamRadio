@@ -1,5 +1,5 @@
 #
-# Absolute path of the dictory the script is in. Don't touch this unless you know what you're doing
+# Absolute path of the directory the script is in. Don't touch this unless you know what you're doing
 #
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
@@ -14,14 +14,9 @@ VOLUME="0.8"
 THREAD_COUNT="0"
 
 #
-# Absolute path of the directory your music is stored in
+# Absolute path of the directory your videos are stored in
 #
-MUSIC_DIR="${SCRIPT_DIR}/media/music"
-
-#
-# Filepath of your background video. Must be a streamable MKV, FLV or MP4 file
-#
-BACKGROUND="${SCRIPT_DIR}/media/sample_background.mkv"
+VIDEO_DIR="${SCRIPT_DIR}/media/videos"
 
 #
 # RTMP urls you wish to stream to
