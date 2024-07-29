@@ -14,11 +14,13 @@ done
 
 while true :
 do
-	ffmpeg -threads "${THREAD_COUNT}" -loglevel warning \
-		-fflags "+autobsf+genpts+discardcorrupt" -avoid_negative_ts "make_zero" -copytb 1 \
-		-re -stream_loop -1 -i "${BACKGROUND}" \
-		-f alsa -ac 2 -thread_queue_size 1024 -i hw:Loopback,1,0 -c:v copy -c:a aac -filter:a "volume=${VOLUME}" -map 0:v -map 1:a \
-		-f tee "${tee_muxer_output}"
-	 echo "[ERROR] `date '+%Y-%m-%d %H:%M:%S'` Stream crashed. Restarting..." >> ${SCRIPT_DIR}/event.log
-	 on_stream_restart
+    for video in "${VIDEO_DIR}"/*.mp4; do
+        ffmpeg -threads "${THREAD_COUNT}" -loglevel warning \
+            -fflags "+autobsf+genpts+discardcorrupt" -avoid_negative_ts "make_zero" -copytb 1 \
+            -re -stream_loop -1 -i "${video}" \
+            -c:v copy -c:a aac -filter:a "volume=${VOLUME}" -map 0:v -map 0:a \
+            -f tee "${tee_muxer_output}"
+        echo "[ERROR] `date '+%Y-%m-%d %H:%M:%S'` Stream crashed. Restarting..." >> ${SCRIPT_DIR}/event.log
+        on_stream_restart
+    done
 done
